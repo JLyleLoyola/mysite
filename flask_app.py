@@ -9,6 +9,13 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    period = db.Column(db.Integer)
+    name = db.Column(db.String(80))
+    teacher_name = db.Column(db.String(80))
+    resource_name = db.Column(db.String(80))
+    resource_url = db.Column(db.String(300))
 
 @app.route('/')
 def homepage():
@@ -30,4 +37,7 @@ def register():
 @app.route('/top_ten_songs')
 def top_ten_songs():
     return render_template('top_ten_songs.html', songs=constants.TOP_TEN_SONGS)
+
+if __name__ == '__main__':
+  db.create_all()
 
