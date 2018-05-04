@@ -4,24 +4,20 @@
 from flask import Flask
 from flask import render_template
 import constants
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config.from_object('config.BaseConfig')
+db = SQLAlchemy(app)
 
-'''
 @app.route('/')
-def hello_world():
-    return 'Hello from Jeffrey!!!!'
-'''
+def homepage():
+    return render_template('index.html')
 
 @app.route('/about_me')
 def about_me():
     return render_template('about_me.html')
 
-'''
-@app.route('/class_schedule')
-def class_schedule():
-    return app.send_static_file('class_schedule.html')
-'''
 @app.route('/class_schedule')
 def class_schedule():
     return render_template('class_schedule.html',
@@ -31,6 +27,7 @@ def class_schedule():
 def register():
     return render_template('register.html')
 
-@app.route('/')
-def homepage():
-    return render_template('index.html')
+@app.route('/top_ten_songs')
+def top_ten_songs():
+    return render_template('top_ten_songs.html', songs=constants.TOP_TEN_SONGS)
+

@@ -1,4 +1,5 @@
 import course
+import song
 
 COURSES = [
     course.Course(period=1,
@@ -30,5 +31,43 @@ COURSES = [
                   name='C Aid for Lang',
                   teacher_name='Mrs. Geiser',
                   resource_name='Schoolloop.com',
-                  resource_url='http://ssfhs.schoolloop.com/'),
+                  resource_url='http://ssfhs.schoolloop.com/')
 ]
+
+
+TOP_TEN_SONGS = [
+    song.Song(title='Attention',
+              artist='Charlie Puth',
+              youtube_url='https://www.youtube.com/watch?v=5gBeLN2Jkng'),
+    song.Song(title='How Long',
+              artist='Charlie Puth',
+              youtube_url='https://www.youtube.com/watch?v=3qTAxAEhH08'),
+    song.Song(title='Done For Me',
+              artist='Charlie Puth',
+              youtube_url='https://www.youtube.com/watch?v=Iz9NcSarSfo'),
+    song.Song(title='Make Time',
+              artist='Jeff Bernat & Avalon Young',
+              youtube_url='https://www.youtube.com/watch?v=cMYvxhK3hmg'),
+    song.Song(title='All For Me',
+              artist='Jeff Bernat & JamieBoy',
+              youtube_url='https://www.youtube.com/watch?v=mRt8DBoWQoE'),
+    song.Song(title='If You Wonder',
+              artist='Jeff Bernat',
+              youtube_url='https://www.youtube.com/watch?v=KCEyXmqg2xs'),
+    song.Song(title="DIDN'T STAND A CHANCE",
+              artist='Travis Garland',
+              youtube_url='https://www.youtube.com/watch?v=y7Jlg8GkJnE'),
+    song.Song(title='YOU',
+              artist='11:11',
+              youtube_url='https://www.youtube.com/watch?v=wexKj035WR0'),
+    song.Song(title="I'm Not Sorry",
+              artist='DEAN ft. Eric Bellinger' ,
+              youtube_url='https://www.youtube.com/watch?v=wzvRxguTPa4'),
+    song.Song(title='Boat',
+              artist='죠지 (George)',
+              youtube_url='https://www.youtube.com/watch?v=7f_VdgewnTo')
+]
+
+
+
+
