@@ -1,6 +1,7 @@
-import course
+#import course
 import song
 
+'''
 COURSES = [
     course.Course(period=1,
                   name='Intro to Computer Science',
@@ -33,7 +34,7 @@ COURSES = [
                   resource_name='Schoolloop.com',
                   resource_url='http://ssfhs.schoolloop.com/')
 ]
-
+'''
 
 TOP_TEN_SONGS = [
     song.Song(title='Attention',
@@ -64,7 +65,7 @@ TOP_TEN_SONGS = [
               artist='DEAN ft. Eric Bellinger' ,
               youtube_url='https://www.youtube.com/watch?v=wzvRxguTPa4'),
     song.Song(title='Boat',
-              artist='죠지 (George)',
+              artist='George',
               youtube_url='https://www.youtube.com/watch?v=7f_VdgewnTo')
 ]
 
