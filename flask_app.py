@@ -4,10 +4,13 @@
 from flask import Flask
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config.from_object('config.BaseConfig')
 db = SQLAlchemy(app)
+
+Bootstrap(app)
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     period = db.Column(db.Integer)
@@ -16,6 +19,7 @@ class Course(db.Model):
     resource_name = db.Column(db.String(80))
     resource_url = db.Column(db.String(300))
 
+Bootstrap(app)
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80))
