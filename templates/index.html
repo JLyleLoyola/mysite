@@ -11,5 +11,9 @@
 {% for post in posts %}
 <p>{{ post.body }}</p>
 {% endfor %}
+<h3>Recent recommended shows from users</h3>
+{% for show in shows %}
+<p>{{ show.body }}</p>
+{% endfor %}
 </div>
 {% endblock %}

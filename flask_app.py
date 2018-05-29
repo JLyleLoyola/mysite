@@ -76,6 +76,20 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+class PostForm(FlaskForm):
+    message = StringField('Message', validators=[InputRequired(), Length(max=280)])
+    submit = SubmitField('Post')
+
+class Shows(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(280))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class ShowsForm(FlaskForm):
+    message = StringField('Shows', validators=[InputRequired(), Length(max=280)])
+    submit = SubmitField('Post')
+
 @login.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=int(user_id)).first()
@@ -83,7 +97,8 @@ def load_user(user_id):
 @app.route('/')
 def homepage():
     recent_posts = Post.query.order_by(Post.timestamp.desc()).limit(20).all()
-    return render_template('index.html', posts=recent_posts)
+    recent_recommended_shows = Shows.query.order_by(Shows.timestamp.desc()).limit(20).all()
+    return render_template('index.html', posts=recent_posts, shows=recent_recommended_shows)
 
 @app.route('/about_me')
 def about_me():
@@ -106,7 +121,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return redirect(url_for('index'))
+        return redirect(url_for('homepage'))
     return render_template('register.html', form=form)
 
 @app.route('/top_ten_songs')
@@ -126,13 +141,13 @@ def login():
             flash('Username or password is incorrect.', 'danger')
             return render_template('login.html', form=form)
         login_user(user)
-        return redirect(url_for('index'))
+        return redirect(url_for('homepage'))
     return render_template('login.html', form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('homepage'))
 
 @nav.navigation('mysite_navbar')
 def create_navbar():
@@ -140,6 +155,7 @@ def create_navbar():
     login_view = View('Login', 'login')
     logout_view = View('Logout', 'logout')
     posts_view = View('Posts', 'posts')
+    shows_view = View('Shows', 'shows')
     register_view = View('Register', 'register')
     about_me_view = View('About Me', 'about_me')
     class_schedule_view = View('Class Schedule', 'class_schedule')
@@ -149,7 +165,7 @@ def create_navbar():
                              class_schedule_view,
                              top_ten_songs_view)
     if current_user.is_authenticated:
-        return Navbar('MySite', home_view, posts_view, misc_subgroup, logout_view)
+        return Navbar('MySite', home_view, posts_view, shows_view, misc_subgroup, logout_view)
     else:
         return Navbar('MySite', home_view, misc_subgroup, login_view, register_view)
 
@@ -165,6 +181,20 @@ def posts():
         db.session.commit()
         posts.append(new_post)
     return render_template('posts.html', form=form, posts=posts)
+
+@app.route('/shows', methods=['GET', 'POST'])
+def shows():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    form = ShowsForm()
+    shows = Shows.query.filter_by(user_id=current_user.id).all()
+    if form.validate_on_submit():
+        new_shows = Shows(user_id=current_user.id, body=form.message.data)
+        db.session.add(new_shows)
+        db.session.commit()
+        shows.append(new_shows)
+    return render_template('recommended_shows.html', form=form, shows=shows)
+
 
 if __name__ == '__main__':
   db.create_all()

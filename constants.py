@@ -1,5 +1,6 @@
 #import course
-import song
+#import song
+
 
 '''
 COURSES = [
